@@ -13,46 +13,53 @@
 		  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body ng-controller="rejornCtrl">
-		<div class="container">
-			<!-- Static navbar -->
-			<nav class="navbar navbar-default" role="navigation">
-			  <div class="navbar-header">
-			    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation {{username}}</span>
-			      <span class="icon-bar"></span>
-			      <span class="icon-bar"></span>
-			      <span class="icon-bar"></span>
-			    </button>
-			    <a class="navbar-brand" href="/">Sinatra + Twitter Bootstrap</a>
-			  </div>
-			  <div class="navbar-collapse collapse">
-			    <ul class="nav navbar-nav">
-			      <li><a href="/secure/place">Secret</a></li>
-			    </ul>
-			    <ul class="nav navbar-nav navbar-right">
-			        <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <b class="caret"></b></a>
-			        <ul class="dropdown-menu">
-			            <li><a href="/login/form">Login</a></li>
-			            <li class="divider"></li>
-			            <li><a href="/logout">Logout</a></li>
-			        </ul>
-			      </li>
+	<body >
+      <h3>Showing <%= @news.length %> articles</h3>
+      <style>
+        .selected-class-name { background-color: yellow;}
+        .content { background-color: none;}
+        .not-content { background-color: yellow;}
+        .extra {background-color: red; }
+      </style>
 
-			    </ul>
-			  </div><!--/.nav-collapse -->
-			</nav>
+      <div id="news" class="span10" style="padding: 10px 0px;" ng-controller="newsContentCtrl">
+        <h3><span ng-click="previous(news.id)">-</span> ID: {{news.id}} <span ng-click="next(news.id)">+</span></h3>
+        <h1>{{news.title}}</h1>
+        <b>{{news.updated_ts}}</b>
+        <h3>
+        Legend
+        <ul>
+        <li ng-repeat="legend in news.class_legend" ng-class="legend">{{legend}}</li>
+        </ul></h3>
+        <ul>
+          <li ng-repeat="content in news.contents" ng-class="itemIn($index)" ng-click="itemClicked($index)" >{{content}}</li>
+      </ul>
+      <button ng-click='sentences()'>Request Raw Text to Sentences</button>
+      </div>
+      </div>
 
+      </div>
 
-	</div>
+  <!--
 
+          <span  
+            ng-class="{ 'selected-class-name': itemIn('<% #nindex %>_<% #index %>') }"
+            ng-click="itemClicked('<% #nindex %>_<%  #index %>')"><% #news_sent %></span>
+  -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/vendor/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/vendor/bootstrap/js/bootstrap.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script>
+var rejornApp = angular.module('rejornApp', []);
+      </script>
+      <script>
+        rejornApp.service('newsContentInitializer', function(){
+        return <%= @news.to_json %>;
+        });
+      </script>
     <script src="/js/rejourn-ctrl.js"></script>
   </body>
 </html>
