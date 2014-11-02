@@ -1,0 +1,1 @@
+ssh -i keys/willy.pem ec2-user@ec2-54-213-216-43.us-west-2.compute.amazonaws.com
