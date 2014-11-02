@@ -20,6 +20,8 @@
         .content { background-color: none;}
         .not-content { background-color: yellow;}
         .extra {background-color: red; }
+        .list {display: block;}
+        .inline {display: inline; margin: 3px;}
       </style>
 
       <div id="news" class="span10" style="padding: 10px 0px;" ng-controller="newsContentCtrl">
@@ -31,10 +33,9 @@
         <ul>
         <li ng-repeat="legend in news.class_legend" ng-class="legend">{{legend}}</li>
         </ul></h3>
-        <ul>
-          <li ng-repeat="content in news.contents" ng-class="itemIn($index)" ng-click="itemClicked($index)" >{{content}}</li>
-      </ul>
+          <span href="#" tooltip="{{news.class_legend[news.content_classes[$index]]}}" ng-repeat="content in news.contents track by $index" ng-class="[ itemIn($index), typeTag($index) ]" ng-click="itemClicked($index)" >{{content}}</span>
       <button ng-click='sentences()'>Request Raw Text to Sentences</button>
+      <button ng-click='pos()'>Request Sentences to POS</button>
       </div>
       </div>
 
@@ -53,13 +54,16 @@
     <script src="/vendor/bootstrap/js/bootstrap.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
     <script>
-var rejornApp = angular.module('rejornApp', []);
+var rejornApp = angular.module('rejornApp', ['ui.bootstrap']);
       </script>
       <script>
         rejornApp.service('newsContentInitializer', function(){
         return <%= @news.to_json %>;
         });
       </script>
+    <script src="/js/ui-bootstrap-custom-0.10.0.js"></script>
+    <script src="/js/ui-bootstrap-custom-tpls-0.10.0.js"></script>
     <script src="/js/rejourn-ctrl.js"></script>
+
   </body>
 </html>
