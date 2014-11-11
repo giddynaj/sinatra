@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="rejornApp">
 	<head>
-		<title>Sinatra + Twitter Bootstrap</title>
+		<title>Tags</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!-- Bootstrap -->
 		<link href="/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -14,7 +14,6 @@
 		<![endif]-->
 	</head>
 	<body >
-      <h3>Showing <%= @news.length %> articles</h3>
       <style>
         .selected-class-name { background-color: yellow;}
         .content { background-color: none;}
@@ -24,30 +23,19 @@
         .inline {display: inline; margin: 3px;}
       </style>
 
-      <div id="news" class="span10" style="padding: 10px 0px;" ng-controller="newsContentCtrl">
-        <h3><span ng-click="previous(news.id)">-</span> ID: {{news.id}} <span ng-click="next(news.id)">+</span></h3>
-        <h1>{{news.title}}</h1>
-        <b>{{news.updated_ts}}</b>
-        <h3>
-        Legend
-        <ul>
-        <li ng-repeat="legend in news.class_legend" ng-class="legend">{{legend}}</li>
-        </ul></h3>
-          <span href="#" tooltip="{{news.class_legend[news.content_classes[$index]]}}" ng-repeat="content in news.contents track by $index" ng-class="[ itemIn($index), typeTag($index) ]" ng-click="itemClicked($index)" >{{content}}</span>
-      <button ng-click='sentences()'>Request Raw Text to Sentences</button>
-      <button ng-click='sent_sentences()'>Send senteces to be saved</button>
-      <button ng-click='pos()'>Request Sentences to POS</button>
+      <div id="tag" class="span10" style="padding: 10px 0px;" ng-controller="tagCtrl">
+        <input placeholder="Context" size=20 ng-model="context"></input>
+        <button ng-click="get_tags(context)">Get Context</button>
+        <input placeholder="Tags" size=20 ng-model="add_tag"></input>
+        <button ng-click="set_tags(add_tag)">Set Tag</button>
+<h4>{{context}}</h4>
+<ul>
+<li ng-repeat="tag in tags">
+{{tag}} 
+<a href="#" ng-click="del_tags(tag)"><i class="icon-minus"></i></a>
+</li>
+</ul>
       </div>
-      </div>
-
-      </div>
-
-  <!--
-
-          <span  
-            ng-class="{ 'selected-class-name': itemIn('<% #nindex %>_<% #index %>') }"
-            ng-click="itemClicked('<% #nindex %>_<%  #index %>')"><% #news_sent %></span>
-  -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/vendor/jquery.js"></script>
@@ -57,14 +45,9 @@
     <script>
 var rejornApp = angular.module('rejornApp', ['ui.bootstrap']);
       </script>
-      <script>
-        rejornApp.service('newsContentInitializer', function(){
-        return <%= @news.to_json %>;
-        });
-      </script>
     <script src="/js/ui-bootstrap-custom-0.10.0.js"></script>
     <script src="/js/ui-bootstrap-custom-tpls-0.10.0.js"></script>
-    <script src="/js/rejourn-ctrl.js"></script>
+    <script src="/js/tag-ctrl.js"></script>
 
   </body>
 </html>

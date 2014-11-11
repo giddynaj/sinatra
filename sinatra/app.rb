@@ -21,6 +21,14 @@ get '/' do
   erb :index
 end
 
+get '/search' do
+  erb :search
+end
+
+get '/tag' do
+  erb :tag
+end
+
 get '/:id' do
   @news = News.where("id = ?",params[:id]).order("updated_ts desc").first
   json(@news, :encoder => :to_json, :content_type => :js)

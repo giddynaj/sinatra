@@ -61,6 +61,17 @@ var newsContentCtrl = function($scope, initializer,$http){
        });
   };
 
+  $scope.sent_sentences = function(){
+       var dataObject = { content : $scope.news.contents, classes : $scope.news.content_classes }
+//       var responsePromise = $http.post('http://localhost:8080/tokenize_sent',dataObject,{})
+       var responsePromise = $http.post('http://ec2-54-213-216-43.us-west-2.compute.amazonaws.com:8080/get_sent',dataObject,{})
+       responsePromise.success(function(dataFromServer, status, headers, config){
+       });
+       responsePromise.error(function(data, status, headers, config){
+         alert("Submitting form failed!");
+       });
+  };
+
   $scope.pos = function(){
        var dataObject = { content : $scope.news.contents }
 //       var responsePromise = $http.post('http://localhost:8080/tokenize_sent',dataObject,{})
