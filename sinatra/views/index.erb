@@ -13,7 +13,7 @@
 		  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body >
+	<body style="padding-top: 40px">
       <h3>Showing <%= @news.length %> articles</h3>
       <style>
         .selected-class-name { background-color: yellow;}
@@ -23,6 +23,7 @@
         .list {display: block;}
         .inline {display: inline; margin: 3px;}
       </style>
+<%= erb :nav %>
 
       <div id="news" class="span10" style="padding: 10px 0px;" ng-controller="newsContentCtrl">
         <h3><span ng-click="previous(news.id)">-</span> ID: {{news.id}} <span ng-click="next(news.id)">+</span></h3>

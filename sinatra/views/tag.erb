@@ -13,7 +13,7 @@
 		  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body >
+	<body style="padding-top: 40px">
       <style>
         .selected-class-name { background-color: yellow;}
         .content { background-color: none;}
@@ -22,17 +22,28 @@
         .list {display: block;}
         .inline {display: inline; margin: 3px;}
       </style>
+<%= erb :nav  %>
 
       <div id="tag" class="span10" style="padding: 10px 0px;" ng-controller="tagCtrl">
         <input placeholder="Context" size=20 ng-model="context"></input>
-        <button ng-click="get_tags(context)">Get Context</button>
+        <button ng-click="get_things(context)">Get Context</button>
         <input placeholder="Tags" size=20 ng-model="add_tag"></input>
-        <button ng-click="set_tags(add_tag)">Set Tag</button>
+        <button ng-click="set_things(add_tag)">Set Tag</button>
 <h4>{{context}}</h4>
+<ul></ul>
+<li ng-repeat="key in keys">
+{{key}} 
+<a href="#" ng-click="del_tags(key)"><i class="icon-minus"></i></a>
 <ul>
 <li ng-repeat="tag in tags">
 {{tag}} 
 <a href="#" ng-click="del_tags(tag)"><i class="icon-minus"></i></a>
+</li>
+</ul>
+<ul>
+<li ng-repeat="hash in hashes">
+{{hash}} 
+<a href="#" ng-click="del_hash(hash)"><i class="icon-minus"></i></a>
 </li>
 </ul>
       </div>
