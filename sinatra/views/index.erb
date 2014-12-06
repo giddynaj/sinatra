@@ -17,31 +17,40 @@
       <h3>Showing <%= @news.length %> articles</h3>
       <style>
         .selected-class-name { background-color: yellow;}
+        .LOCATION,.PERSON { background-color: yellow;}
         .content { background-color: none;}
         .not-content { background-color: yellow;}
         .extra {background-color: red; }
         .list {display: block;}
-        .inline {display: inline; margin: 3px;}
+        .inline {float: left; margin: 3px;}
       </style>
 <%= erb :nav %>
 
-      <div id="news" class="span10" style="padding: 10px 0px;" ng-controller="newsContentCtrl">
+<div class="container-fluid" ng-controller="newsContentCtrl">
+<div class="row-fluid">
+      <div id="news" class="span8" style="padding: 10px 0px;">
+      <div class="span10" class="overflow-wrap: break-word;">
         <h3><span ng-click="previous(news.id)">-</span> ID: {{news.id}} <span ng-click="next(news.id)">+</span></h3>
         <h1>{{news.title}}</h1>
         <b>{{news.updated_ts}}</b>
-        <h3>
-        Legend
-        <ul>
-        <li ng-repeat="legend in news.class_legend" ng-class="legend">{{legend}}</li>
-        </ul></h3>
-          <span href="#" tooltip="{{news.class_legend[news.content_classes[$index]]}}" ng-repeat="content in news.contents track by $index" ng-class="[ itemIn($index), typeTag($index) ]" ng-click="itemClicked($index)" >{{content}}</span>
+          <span href="#" tooltip="{{news.class_legend[news.content_classes[$index]]}}" ng-repeat="content in news.contents track by $index" ng-class="[ itemIn($index), typeTag($index) ]" ng-click="itemClicked($index)" style="word-wrap: initial;" >{{content}}</span>
+      <div style="clear: both"></div>
       <button ng-click='sentences()'>Request Raw Text to Sentences</button>
+      <button ng-click='entities()'>Request Entities</button>
       <button ng-click='sent_sentences()'>Send senteces to be saved</button>
       <button ng-click='pos()'>Request Sentences to POS</button>
       </div>
       </div>
-
+<div class="span2">
+        <h3>
+        Legend
+</h3>
+        <ul>
+        <li ng-repeat="legend in news.class_legend" ng-class="legend">{{legend}}</li>
+        </ul>
+</div>
       </div>
+</div>
 
   <!--
 

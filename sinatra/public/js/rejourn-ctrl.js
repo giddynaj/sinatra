@@ -61,6 +61,22 @@ var newsContentCtrl = function($scope, initializer,$http){
        });
   };
 
+  $scope.entities = function(){
+       var dataObject = { content : $scope.news.contents }
+//       var responsePromise = $http.post('http://localhost:8080/tokenize_sent',dataObject,{})
+       var responsePromise = $http.post('http://ec2-54-213-216-43.us-west-2.compute.amazonaws.com:8080/entities',dataObject,{})
+
+       responsePromise.success(function(dataFromServer, status, headers, config){
+           $scope.news.class_legend = dataFromServer.class_legend;
+           $scope.news.contents = dataFromServer.tokens;
+           $scope.news.content_classes = dataFromServer.classes;
+           $scope.news.tags = 'inline';
+       });
+       responsePromise.error(function(data, status, headers, config){
+         alert("Submitting form failed!");
+       });
+  };
+
   $scope.sent_sentences = function(){
        var dataObject = { content : $scope.news.contents, classes : $scope.news.content_classes }
 //       var responsePromise = $http.post('http://localhost:8080/tokenize_sent',dataObject,{})
@@ -94,11 +110,11 @@ var newsContentCtrl = function($scope, initializer,$http){
   };
 
   $scope.typeTag = function(i){
-    if ($scope.news.class_legend[$scope.news.content_classes[i]] != ".") {
+    //if ($scope.news.class_legend[$scope.news.content_classes[i]] != ".") {
      return $scope.news.tags;
-    } else {
-     return 'list';
-    }
+   // } else {
+   //  return 'list';
+   // }
   };
 
   $scope.itemClicked = function(i){

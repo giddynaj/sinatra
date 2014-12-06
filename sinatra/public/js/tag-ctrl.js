@@ -10,14 +10,17 @@ var tagCtrl= function($scope, $http){
   $scope.set_things = function(query){
      if (query.indexOf(":") > -1) { 
      $scope.set_hash(query);
-     $scope.get_hash($scope.context);
      } else {
      $scope.set_tags(query);
-     $scope.get_tags($scope.context);
      }
   }
 
   $scope.get_things = function(context){
+     $scope.get_tags($scope.context);
+  }
+
+  $scope.get_context = function(key){
+     $scope.context = key.split(":")[1];
      $scope.get_tags($scope.context);
      $scope.get_hash($scope.context);
   }
@@ -44,10 +47,11 @@ var tagCtrl= function($scope, $http){
        });
   };
   $scope.set_hash= function(query){
-       var dataObject = { 'context' : $scope.context, 'tag' : query.split(":")[0], 'value' : query.split(":")[1] }
+       var dataObject = { 'context' : $scope.context, 'tag' : query }
        var responsePromise = $http.post('http://ec2-54-213-216-43.us-west-2.compute.amazonaws.com:8080/tags',dataObject,{})
        responsePromise.success(function(dataFromServer, status, headers, config){
         $scope.tag_results = dataFromServer['results']
+        $scope.hash_keys = Object.keys(dataFromServer['hmembers'])
         $scope.hashes = dataFromServer['hmembers']
        });
        responsePromise.error(function(data, status, headers, config){
@@ -60,6 +64,8 @@ var tagCtrl= function($scope, $http){
        responsePromise.success(function(dataFromServer, status, headers, config){
         $scope.tag_results = dataFromServer['results']
         $scope.tags = dataFromServer['members']
+        $scope.hash_keys = Object.keys(dataFromServer['hmembers'])
+        $scope.hashes = dataFromServer['hmembers']
        });
        responsePromise.error(function(data, status, headers, config){
          alert("Submitting form failed!");
@@ -81,6 +87,7 @@ var tagCtrl= function($scope, $http){
   function init(){ 
     $scope.get_keys();
   }
+
   init();
 
 };

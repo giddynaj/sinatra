@@ -30,10 +30,12 @@
         <input placeholder="Tags" size=20 ng-model="add_tag"></input>
         <button ng-click="set_things(add_tag)">Set Tag</button>
 <h4>{{context}}</h4>
-<ul></ul>
+<ul>
 <li ng-repeat="key in keys">
-{{key}} 
+<a href="#" ng-click="get_context(key)">{{key}}</a>
 <a href="#" ng-click="del_tags(key)"><i class="icon-minus"></i></a>
+</li>
+</ul>
 <ul>
 <li ng-repeat="tag in tags">
 {{tag}} 
@@ -41,8 +43,8 @@
 </li>
 </ul>
 <ul>
-<li ng-repeat="hash in hashes">
-{{hash}} 
+<li ng-repeat="hash_key in hash_keys">
+{{hash_key}} {{hashes[hash_key]}}
 <a href="#" ng-click="del_hash(hash)"><i class="icon-minus"></i></a>
 </li>
 </ul>
