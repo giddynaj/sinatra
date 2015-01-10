@@ -3,11 +3,19 @@ require 'sinatra/activerecord'
 require 'sinatra/json'
 require 'pry'
 
+#ActiveRecord::Base.establish_connection(
+#  :adapter  => "mysql2",
+#  :host     => "ec2-54-149-45-86.us-west-2.compute.amazonaws.com",
+#  :username => "ec2-user",
+#  :password => "Homa2013",
+#  :database => "mydb"
+#)
+
 ActiveRecord::Base.establish_connection(
   :adapter  => "mysql2",
-  :host     => "ec2-54-213-216-43.us-west-2.compute.amazonaws.com",
-  :username => "ec2-user",
-  :password => "Homa2013",
+  :host     => "192.168.1.139",
+  :username => "reporter",
+  :password => "new5",
   :database => "mydb"
 )
 

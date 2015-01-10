@@ -17,11 +17,12 @@
       <h3>Showing <%= @news.length %> articles</h3>
       <style>
         .selected-class-name { background-color: yellow;}
-        .LOCATION,.PERSON { background-color: yellow;}
+        .LOCATION,.DURATION,.DATE,.MEASURE,.ORGANIZATION,.PERSON,.MONEY,.CARDINAL,.PERCENT,.TIME { background-color: yellow;}
         .content { background-color: none;}
         .not-content { background-color: yellow;}
         .extra {background-color: red; }
         .list {display: block;}
+        .eol {visibility: hidden; clear: both; display: block;}
         .inline {float: left; margin: 3px;}
       </style>
 <%= erb :nav %>
@@ -38,6 +39,7 @@
       <button ng-click='sentences()'>Request Raw Text to Sentences</button>
       <button ng-click='entities()'>Request Entities</button>
       <button ng-click='sent_sentences()'>Send senteces to be saved</button>
+      <button ng-click='sent_iobs()'>Send entities to be saved</button>
       <button ng-click='pos()'>Request Sentences to POS</button>
       </div>
       </div>
@@ -47,6 +49,21 @@
 </h3>
         <ul>
         <li ng-repeat="legend in news.class_legend" ng-class="legend">{{legend}}</li>
+        </ul>
+
+        <h3>
+        Jobs 
+</h3>
+        <ul>
+        <li ng-repeat="job in jobs" ng-class="legend">
+          <div id="news_id">{{job.news_id}}</div>
+          <div id="request_type">{{job.request_type}}</div>
+          <div id="job_id">{{job.job_id}}</div>
+          <div ng-if="job.status == 'done'">
+            <a href="#" ng-click="getArticleFromJobID(job.job_id)">{{job.status}}</a>
+          </div>
+          <div ng-if="job.status != 'done'">{{job.status}}</div>
+        </li>
         </ul>
 </div>
       </div>
